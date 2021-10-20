@@ -1,0 +1,60 @@
+my problem is
+
+Warning: Undefined array key "imgs" in C:\xampp\htdocs\suhaib1\admin\insert-news.php on line 10
+
+Warning: Trying to access array offset on value of type null in C:\xampp\htdocs\suhaib1\admin\insert-news.php on line 10
+
+Warning: Undefined array key "imgs" in C:\xampp\htdocs\suhaib1\admin\insert-news.php on line 11
+
+Warning: Trying to access array offset on value of type null in C:\xampp\htdocs\suhaib1\admin\insert-news.php on line 11
+
+Warning: Undefined array key "imgs" in C:\xampp\htdocs\suhaib1\admin\insert-news.php on line 12
+
+Warning: Trying to access array offset on value of type null in C:\xampp\htdocs\suhaib1\admin\insert-news.php on line 12
+
+Warning: Undefined array key "imgs" in C:\xampp\htdocs\suhaib1\admin\insert-news.php on line 13
+
+Warning: Trying to access array offset on value of type null in C:\xampp\htdocs\suhaib1\admin\insert-news.php on line 13
+
+Warning: Undefined array key "extension" in C:\xampp\htdocs\suhaib1\admin\insert-news.php on line 18
+
+Warning: Undefined array key "extension" in C:\xampp\htdocs\suhaib1\admin\insert-news.php on line 20
+الصورة غير معرفه
+
+and my code
+
+
+
+
+<?php
+
+        include'head.php';
+        include 'connect.php';
+        $title = $_POST['title'];
+        $info = $_POST['info'];
+        $text = $_POST['text'];
+        // varabls Uploud
+        $imgssName = $_FILES['imgs']['name'];
+        $imgSize = $_FILES['imgs']['size'];
+        $imgTmp = $_FILES['imgs']['tmp_name'];
+        $imgType = $_FILES['imgs']['type'];
+
+        // Chek extensions Img
+        $file_parts = pathinfo($imgssName);
+
+        $file_parts['extension'];
+        $cool_extensions = Array('jpeg', 'jpg', 'JPG', 'png', 'PNG', 'gif', 'JPEG', 'GIF', 'pdf','psd');
+        if (in_array($file_parts['extension'], $cool_extensions)){
+        // Chek Size Img
+        $img = rand(0, 100000000) . '_' . $imgssName;
+        move_uploaded_file($imgTmp, "uploads/imgs//" . $img);
+        $stmt = $con->prepare("INSERT INTO 
+                    news(title,info,text,imgs,date) VALUES (:btitle, :binfo, :btext, :bimgs, now()  )");
+        $stmt->execute(array(
+                        'btitle' => $title,
+                        'binfo' => $info,
+                        'btext' => $text,
+                        'bimgs' => $img,
+                            ));
+
+?>
